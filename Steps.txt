@@ -1,0 +1,2 @@
+1: after creating prisma modals
+2: created a prismadb.ts to create utils
