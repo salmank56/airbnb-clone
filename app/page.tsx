@@ -1,7 +1,38 @@
-export default function Home() {
+import getCurrentUser from "./actions/getCurrentUser";
+import getListings from "./actions/getListings";
+import ClientOnly from "./components/ClientOnly";
+import Container from "./components/Container";
+import EmptyState from "./components/EmptyState";
+import ListingCard from "./components/listings/ListingCard";
+
+export default async function Home() {
+  const listings = await getListings();
+  const currentUser = await getCurrentUser();
+
+  if (listings?.length === 0) {
+    return (
+      <ClientOnly>
+        <Container>
+          <EmptyState showReset />
+        </Container>
+      </ClientOnly>
+    );
+  }
   return (
-    <div>
-      <h1>hello airbnb</h1>
-    </div>
+    <ClientOnly>
+      <Container>
+        <div className="pt-24 grid grid-col-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+          {listings?.map((listing) => {
+            return (
+              <ListingCard
+                currentUser={currentUser}
+                key={listing.id}
+                data={listing}
+              />
+            );
+          })}
+        </div>
+      </Container>
+    </ClientOnly>
   );
 }

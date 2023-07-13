@@ -32,3 +32,11 @@ body,
 ::-webkit-scrollbar-thumb:active {
   background-color: #7d7d7d;
 }
+
+/* leaflet map css */
+.leaflet-bottom,
+.leaflet-control,
+.leaflet-pane,
+.leaflet-top {
+  z-index: 0 !important;
+}
