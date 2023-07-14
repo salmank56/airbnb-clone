@@ -11,6 +11,7 @@ import useRentModal from "@/app/hooks/useRentModal";
 import { signOut } from "next-auth/react";
 import { safaUser } from "@/app/types";
 import toast, { Toaster } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const notify = () => toast.error("You must logged in first");
 
@@ -23,6 +24,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const loginModal = useLoginModal();
   const rentModal = useRentModal();
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value);
@@ -71,10 +73,25 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
           <div className="flex flex-col cursor-pointer">
             {currentUser ? (
               <>
-                <MenuItem onclick={() => {}} label="My Trips" />
-                <MenuItem onclick={() => {}} label="My Favourites" />
-                <MenuItem onclick={() => {}} label="My reservations" />
-                <MenuItem onclick={() => {}} label="My properties" />
+                <MenuItem
+                  onclick={() => router.push("/trips")}
+                  label="My Trips"
+                />
+                <MenuItem
+                  onclick={() => router.push("/favourites")}
+                  label="My Favourites"
+                />
+                <MenuItem
+                  onclick={() => router.push("/reservations")}
+                  label="My reservations"
+                />
+                <MenuItem
+                  onclick={() => {
+                    router.push("/properties");
+                    toggleOpen();
+                  }}
+                  label="My properties"
+                />
                 <MenuItem
                   onclick={() => {
                     toggleOpen();

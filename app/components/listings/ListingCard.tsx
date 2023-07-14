@@ -1,18 +1,17 @@
 "use client";
 
 import useCountries from "@/app/hooks/useCountries";
-import { safaUser, safeListings } from "@/app/types";
-import { Listing, Reservation } from "@prisma/client";
+import { safaUser, safeListings, safeReservations } from "@/app/types";
 import { useRouter } from "next/navigation";
 import React, { useCallback, useMemo } from "react";
-import { format } from "data-fns";
+import { format } from "date-fns";
 import Image from "next/image";
 import HeartButton from "../HeartButton";
 import Button from "../Button";
 
 interface ListingCardProps {
   data: safeListings;
-  reservation?: Reservation;
+  reservation?: safeReservations;
   onAction?: (id: string) => void;
   disabled?: boolean;
   actionLabel?: string;
@@ -41,15 +40,17 @@ const ListingCard: React.FC<ListingCardProps> = ({
       if (disabled) {
         return;
       }
+
       onAction?.(actionId);
     },
-    [onAction, actionId, disabled]
+    [disabled, onAction, actionId]
   );
 
   const price = useMemo(() => {
     if (reservation) {
-      reservation.totalPrice;
+      return reservation.totalPrice;
     }
+
     return data.price;
   }, [reservation, data.price]);
 
@@ -83,7 +84,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
         <div className="font-semibold text-lg">
           {location?.region}, {location?.label}
         </div>
-        <div className="font-light text-neutral-500">
+        <div className="font-light whitespace-nowrap text-neutral-500">
           {reservationDate || data.category}
         </div>
         <div className="flex flex-row items-center gap-1">
@@ -91,7 +92,12 @@ const ListingCard: React.FC<ListingCardProps> = ({
           {!reservation && <div className="font-light">night</div>}
         </div>
         {onAction && actionLabel && (
-          <Button disabled label={actionLabel} small onClick={handleCancel} />
+          <Button
+            disabled={disabled}
+            label={actionLabel}
+            small
+            onClick={handleCancel}
+          />
         )}
       </div>
     </div>

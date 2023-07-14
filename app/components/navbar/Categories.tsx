@@ -100,7 +100,6 @@ export const categoriesList = [
 
 const Categories = () => {
   const params = useSearchParams();
-  console.log(params?.get("category"));
   const category = params?.get("category");
   const pathname = usePathname();
 
