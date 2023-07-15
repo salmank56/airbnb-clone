@@ -55,7 +55,7 @@ export default async function getListings(
     }
 
     if (locationValue) {
-      query.locationValue = locationValue;
+      query.locationValues = locationValue;
     }
 
     if (startDate && endDate) {
@@ -90,7 +90,7 @@ export default async function getListings(
     }));
 
     return safeListings;
-  } catch (error: any) {
-    throw new Error(error);
-  }
+  }catch (error: any) {
+  throw new Error(`An error occurred in getListings: ${error.message}`);
+}
 }
