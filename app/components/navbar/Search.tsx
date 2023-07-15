@@ -54,6 +54,7 @@ const Search = () => {
     <div
       onClick={searchModal.onOpen}
       className="
+      md:ml-[8rem]
         border-[1px]
         w-full
         md:w-auto

@@ -38,7 +38,6 @@ const useFavourites =  ({
             return loginModal.onOpen()
         }
 
-        console.log(listingId)
         try {
             let request
             if(hasFavourited){
