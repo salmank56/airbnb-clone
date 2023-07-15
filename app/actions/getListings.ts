@@ -90,7 +90,7 @@ export default async function getListings(
     }));
 
     return safeListings;
-  }catch (error: any) {
-  throw new Error(`An error occurred in getListings: ${error.message}`);
-}
+  } catch (error: any) {
+    throw new Error(error);
+  }
 }
